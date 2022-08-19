@@ -1,0 +1,81 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="User">
+    <insert id="insert" parameterType="User">
+    INSERT INTO USER (ID, USER_NAME, PASSWORD,FULL_NAME,MOBILE, EMAIL,ADDRESS,ROLE,STATUS,CREATE_AT,UPDATE_AT) VALUES (#{id}, #{userName}, #{password},#{fullName}, #{mobile}, #{email},#{address},#{role},#{status},#{createAt},#{updateAt});
+    </insert>
+ 
+    <update id="update" parameterType="User">
+    UPDATE USER
+    <if test = "userName != null">
+        SET USER_NAME = #{userName}
+     </if>
+     <if test = "password != null">
+        ,PASSWORD = #{password}
+     </if>
+     <if test = "fullName != null">
+        ,FULL_NAME = #{fullName}
+     </if>
+     <if test = "mobile != null">
+        ,MOBILE = #{mobile}
+     </if>
+     <if test = "email != null">
+        ,EMAIL = #{email}
+     </if> 
+     <if test = "address != null">
+        ,ADDRESS = #{address}
+     </if> 
+     <if test = "role != null">
+        ,ROLE = #{role}
+     </if> 
+     <if test = "status != null">
+        ,STATUS = #{status}
+     </if> 
+     <if test = "updateAt != null">
+        ,UPDATE_AT = #{updateAt}
+     </if> 
+     
+     WHERE ID = #{id};
+    </update>
+     
+    <delete id="delete">
+        UPDATE USER SET STATUS = #{status} WHERE ID = #{id};
+    </delete>
+     
+    <select id="getById" parameterType="int" resultMap="User">
+        SELECT ID,USER_NAME,PASSWORD,FULL_NAME,MOBILE,EMAIL,ADDRESS,ROLE,CREATE_AT,UPDATE_AT FROM USER WHERE ID = #{id};
+    </select>
+     
+    <select id="getByUsername" parameterType="String" resultMap="result">
+        SELECT ID, USER_NAME, FULL_NAME, ROLE, STATUS, PASSWORD, CART_ID
+        FROM USER 
+        JOIN CART ON USER.id = CART.user_id 
+        WHERE USER.USER_NAME = #{userName} AND USER.STATUS = "ACTIVE";
+    </select>
+
+    <select id="countByUserName" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM USER WHERE USER_NAME = #{userName};
+    </select>
+     
+    <select id="search" resultType="list">
+        SELECT ID,USER_NAME,FULL_NAME,MOBILE,EMAIL,ADDRESS,ROLE,CREATE_AT,UPDATE_AT,STATUS FROM USER
+        WHERE USER_NAME like %#{userName}%
+        ORDER BY ID ASC
+        LIMIT #{param.offset}, #{param.pagesize}; 
+    </select>
+
+    <resultMap id = "result" type = "User">
+        <result property = "id" column = "ID"/>
+        <result property = "userName" column = "USER_NAME"/>
+        <result property = "password" column = "PASSWORD"/>
+        <result property = "fullName" column = "FULL_NAME"/>
+        <result property = "mobile" column = "MOBILE"/>
+        <result property = "email" column = "EMAIL"/>
+        <result property = "address" column = "ADDRESS"/>
+        <result property = "role" column = "ROLE"/>
+        <result property = "status" column = "STATUS"/>
+        <result property = "createAt" column = "CREATE_AT"/>
+        <result property = "updateAt" column = "UPDATE_AT"/>
+     </resultMap>
+
+</mapper>

@@ -1,0 +1,29 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+ 
+<configuration>
+    <!-- <typeAliases>
+        <typeAlias alias="User" type="vn.com.cmcglobal.demoshopcart.User.model.User"/>
+    </typeAliases> -->
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC" />
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver" />
+                <property name="url" value="jdbc:mysql://localhost:3306/shopcart" />
+                <property name="username" value="root" />
+                <property name="password" value="Cp02131226@@" />
+            </dataSource>
+        </environment>
+    </environments>
+ 
+    <mappers>
+        <mapper class="vn.com.cmcglobal.demoshopcart.User.mapper.UserMapper" />
+        <!-- <mapper resource="vn/com/cmcglobal/demoshopcart/User/mapper/User.xml" /> -->
+        <mapper class="vn.com.cmcglobal.demoshopcart.Cart.mapper.CartMapper" />
+        <mapper class="vn.com.cmcglobal.demoshopcart.Cart.mapper.CartLineMapper" />
+        <mapper class="vn.com.cmcglobal.demoshopcart.Product.mapper.ProductMapper" />
+        <mapper class="vn.com.cmcglobal.demoshopcart.Bill.mapper.BillOrderMapper" />
+    </mappers>
+ 
+</configuration>
